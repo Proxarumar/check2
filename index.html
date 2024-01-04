@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>База данных растений</title>
+</head>
+<body>
+    <h1>Информация о растениях</h1>
+    <div id="plantInfo">Загрузка данных...</div>
+
+    <!-- Скрипты будут здесь -->
+	<script>
+    async function fetchPlants() {
+        try {
+            const response = await fetch('plants.json'); // Убедитесь, что путь к файлу верный
+            const plants = await response.json();
+
+            // Простой пример отображения данных
+            const plantElement = document.getElementById('plantInfo');
+            plantElement.innerHTML = '';
+            plants.forEach(plant => {
+                plantElement.innerHTML += `<p>${plant.name} (${plant.variety}), ${plant.heightMin}-${plant.heightMax} см: ${plant.price} руб.</p>`;
+            });
+        } catch (error) {
+            console.error('Ошибка при загрузке данных: ', error);
+            document.getElementById('plantInfo').innerText = 'Ошибка при загрузке данных.';
+        }
+    }
+
+    fetchPlants();
+</script>
+</body>
+</html>
